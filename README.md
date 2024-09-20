@@ -17,7 +17,7 @@ The Flutter To-Do app allows users to list and store tasks, set reminders, and c
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/flutter-todo-app.git
+    git clone https:https://github.com/MohsenBahaj/To-Do-App
     cd flutter-todo-app
     ```
 

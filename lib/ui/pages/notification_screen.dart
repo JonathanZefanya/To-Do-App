@@ -1,16 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:todo/ui/theme.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({
-    Key? key,
+    super.key,
     required this.payload,
-  }) : super(key: key);
+  });
   final String payload;
   @override
+  // ignore: library_private_types_in_public_api
   _NotificationScreenState createState() => _NotificationScreenState();
 }
 
@@ -50,7 +50,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             Column(
               children: [
                 Text(
-                  'Hello , Mohsen',
+                  'Hello , Sayang',
                   style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.w900,
@@ -60,7 +60,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   height: 10,
                 ),
                 Text(
-                  'You have a new reminder',
+                  'Aku Ingetin Kamu',
                   style: TextStyle(fontSize: 18),
                 )
               ],
@@ -88,7 +88,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             width: 20,
                           ),
                           Text(
-                            "Title", //_payload.toString().split('|')[0],
+                            "Judul", //_payload.toString().split('|')[0],
                             style: TextStyle(
                                 color: Get.isDarkMode
                                     ? Colors.black
@@ -118,7 +118,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             width: 20,
                           ),
                           Text(
-                            "Descroption", //_payload.toString().split('|')[0],
+                            "Deskripsi", //_payload.toString().split('|')[0],
                             style: TextStyle(
                                 color: Get.isDarkMode
                                     ? Colors.black
@@ -151,7 +151,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             width: 20,
                           ),
                           Text(
-                            "Date", //_payload.toString().split('|')[0],
+                            "Tanggal", //_payload.toString().split('|')[0],
                             style: TextStyle(
                                 color: Get.isDarkMode
                                     ? Colors.black

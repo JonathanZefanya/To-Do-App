@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -75,9 +74,14 @@ class NotifyHelper {
             channelDescription: 'your channel description',
             importance: Importance.max,
             priority: Priority.high,
-            ticker: 'ticker');
+            ticker: 'ticker',
+            sound: RawResourceAndroidNotificationSound('notification_sound'),
+            playSound: true,);
     const DarwinNotificationDetails iosNotificationDetails =
-        DarwinNotificationDetails();
+        DarwinNotificationDetails(
+          presentSound: true,
+          sound: 'notification_sound.caf',
+        );
     const NotificationDetails androidnotificationDetails = NotificationDetails(
         android: androidNotificationDetails, iOS: iosNotificationDetails);
 
@@ -115,81 +119,83 @@ class NotifyHelper {
   @pragma('vm:entry-point')
   void notificationTapBackground(NotificationResponse notificationResponse) {
     // handle action
+
+    Get.to(NotificationScreen(payload: notificationResponse.payload!));
   }
-// flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>().requestNotificationsPermission();
-// // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
+  // flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>().requestNotificationsPermission();
+  // // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
 
-//  final AndroidInitializationSettings initializationSettingsAndroid =
-//     AndroidInitializationSettings('appicon');
-// final DarwinInitializationSettings initializationSettingsDarwin =
-//     DarwinInitializationSettings(
-//         onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-// final LinuxInitializationSettings initializationSettingsLinux =
-//     LinuxInitializationSettings(
-//         defaultActionName: 'Open notification');
-// final InitializationSettings initializationSettings = InitializationSettings(
-//     android: initializationSettingsAndroid,
-//     iOS: initializationSettingsDarwin,
-//     linux: initializationSettingsLinux);
-// flutterLocalNotificationsPlugin.initialize(initializationSettings,
-//     onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
+  // final AndroidInitializationSettings initializationSettingsAndroid =
+  //     AndroidInitializationSettings('appicon');
+  // final DarwinInitializationSettings initializationSettingsDarwin =
+  //     DarwinInitializationSettings(
+  //         onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+  // final LinuxInitializationSettings initializationSettingsLinux =
+  //     LinuxInitializationSettings(
+  //         defaultActionName: 'Open notification');
+  // final InitializationSettings initializationSettings = InitializationSettings(
+  //     android: initializationSettingsAndroid,
+  //     iOS: initializationSettingsDarwin,
+  //     linux: initializationSettingsLinux);
+  // flutterLocalNotificationsPlugin.initialize(initializationSettings,
+  //     onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
 
-// ...
+  // ...
 
-// await flutterLocalNotificationsPlugin.initialize(
-//     initializationSettings,
-//     onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) async {
-//         // ...
-//     },
-//     onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
-// );
+  // await flutterLocalNotificationsPlugin.initialize(
+  //     initializationSettings,
+  //     onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) async {
+  //         // ...
+  //     },
+  //     onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
+  // );
 
-// Future<void> _showNotificationWithActions() async {
-//   const AndroidNotificationDetails androidNotificationDetails =
-//       AndroidNotificationDetails(
-//     '...',
-//     '...',
+  // Future<void> _showNotificationWithActions() async {
+  //   const AndroidNotificationDetails androidNotificationDetails =
+  //       AndroidNotificationDetails(
+  //     '...',
+  //     '...',
 
-//     actions: <AndroidNotificationAction>[
-//       AndroidNotificationAction('id_1', 'Action 1'),
-//       AndroidNotificationAction('id_2', 'Action 2'),
-//       AndroidNotificationAction('id_3', 'Action 3'),
-//     ],
-//   );
-//   const NotificationDetails notificationDetails =
-//       NotificationDetails(android: androidNotificationDetails);
-//   await flutterLocalNotificationsPlugin.show(
-//       0, '...', '...', notificationDetails);
-// }
+  //     actions: <AndroidNotificationAction>[
+  //       AndroidNotificationAction('id_1', 'Action 1'),
+  //       AndroidNotificationAction('id_2', 'Action 2'),
+  //       AndroidNotificationAction('id_3', 'Action 3'),
+  //     ],
+  //   );
+  //   const NotificationDetails notificationDetails =
+  //       NotificationDetails(android: androidNotificationDetails);
+  //   await flutterLocalNotificationsPlugin.show(
+  //       0, '...', '...', notificationDetails);
+  // }
 
-// FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-//     FlutterLocalNotificationsPlugin();
-// // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
-// const AndroidInitializationSettings initializationSettingsAndroid =
-//     AndroidInitializationSettings('app_icon');
-// final DarwinInitializationSettings initializationSettingsDarwin =
-//     DarwinInitializationSettings(
-//         onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-// final LinuxInitializationSettings initializationSettingsLinux =
-//     LinuxInitializationSettings(
-//         defaultActionName: 'Open notification');
+  // FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  //     FlutterLocalNotificationsPlugin();
+  // // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
+  // const AndroidInitializationSettings initializationSettingsAndroid =
+  //     AndroidInitializationSettings('app_icon');
+  // final DarwinInitializationSettings initializationSettingsDarwin =
+  //     DarwinInitializationSettings(
+  //         onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+  // final LinuxInitializationSettings initializationSettingsLinux =
+  //     LinuxInitializationSettings(
+  //         defaultActionName: 'Open notification');
 
-// FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-//       FlutterLocalNotificationsPlugin();
+  // FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  //       FlutterLocalNotificationsPlugin();
 
-//   final MacOSInitializationSettings initializationSettingsMacOS =
-//       MacOSInitializationSettings(
-//           requestAlertPermission: false,
-//           requestBadgePermission: false,
-//           requestSoundPermission: false);
-//   final LinuxInitializationSettings initializationSettingsLinux =
-//     LinuxInitializationSettings(
-//         defaultActionName: 'Open notification');
-//   final InitializationSettings initializationSettings = InitializationSettings(
-//       android: initializationSettingsAndroid,
-//       iOS: initializationSettingsDarwin,
-//       macOS: initializationSettingsDarwin,
-//       linux: initializationSettingsLinux);
-//   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-//       onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
+  //   final MacOSInitializationSettings initializationSettingsMacOS =
+  //       MacOSInitializationSettings(
+  //           requestAlertPermission: false,
+  //           requestBadgePermission: false,
+  //           requestSoundPermission: false);
+  //   final LinuxInitializationSettings initializationSettingsLinux =
+  //     LinuxInitializationSettings(
+  //         defaultActionName: 'Open notification');
+  //   final InitializationSettings initializationSettings = InitializationSettings(
+  //       android: initializationSettingsAndroid,
+  //       iOS: initializationSettingsDarwin,
+  //       macOS: initializationSettingsDarwin,
+  //       linux: initializationSettingsLinux);
+  //   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+  //       onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
 }

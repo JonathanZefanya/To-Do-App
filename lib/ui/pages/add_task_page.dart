@@ -28,7 +28,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
   int _selectedRemind = 5;
   List<int> remindList = [0, 5, 10, 15, 20];
   String _selectedRepeat = 'None';
-  List<String> repeatList = ['None', 'Daily', 'Weekly', 'Monthly', 'Yearly'];
+  List<String> repeatList = ['None', 'Harian', 'Mingguan', 'Bulanan', 'Tahunan'];
   int _selectedColor = 0;
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         elevation: 0,
         actions: [
           CircleAvatar(
-            backgroundImage: AssetImage('images/person.jpeg'),
+            backgroundImage: AssetImage('images/nahida.png'),
           ),
           SizedBox(
             width: 20,
@@ -52,21 +52,21 @@ class _AddTaskPageState extends State<AddTaskPage> {
               children: [
                 Text(
                   textAlign: TextAlign.center,
-                  'Add Task',
+                  'Tambah Jadwal',
                   style: titleStyle,
                 ),
                 InputField(
-                  title: 'Title',
-                  note: 'Enter title here.',
+                  title: 'Judul',
+                  note: 'Masukan Judul.',
                   controller: _titleController,
                 ),
                 InputField(
-                  title: 'Note',
-                  note: 'Enter note here.',
+                  title: 'Deskripsi',
+                  note: 'Masukan Deskripsi.',
                   controller: _noteController,
                 ),
                 InputField(
-                  title: 'Date',
+                  title: 'Tanggal',
                   note: DateFormat.yMd().format(_selectedDate),
                   myWidget: IconButton(
                       onPressed: () {
@@ -78,7 +78,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   children: [
                     Expanded(
                       child: InputField(
-                        title: 'Start Time',
+                        title: 'Waktu Mulai',
                         note: _startTime,
                         myWidget: IconButton(
                           onPressed: () {
@@ -93,7 +93,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     ),
                     Expanded(
                       child: InputField(
-                        title: 'End Time',
+                        title: 'Waktu Berakhir',
                         note: _endTime,
                         myWidget: IconButton(
                           onPressed: () {
@@ -106,9 +106,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   ],
                 ),
                 InputField(
-                  title: 'Remind',
+                  title: 'Pengingat',
                   note:
-                      '${_selectedRemind == 0 ? 'On Time' : _selectedRemind.toString() + ' minutes early'}  ',
+                      '${_selectedRemind == 0 ? 'Tepat Waktu' : '$_selectedRemind Menit Lebih Awal'}  ',
                   myWidget: DropdownButton<String>(
                       borderRadius: BorderRadius.circular(10),
                       dropdownColor: Colors.blueGrey,
@@ -126,7 +126,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                               alignment: AlignmentDirectional.bottomStart,
                               value: e.toString(),
                               child: Text(
-                                '${e == 0 ? 'On Time' : e}',
+                                '${e == 0 ? 'Tepat Waktu' : e}',
                                 style: TextStyle(color: Colors.white),
                               )))
                           .toList(),
@@ -138,8 +138,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       }),
                 ),
                 InputField(
-                  title: 'Remind',
-                  note: '${_selectedRepeat}  ',
+                  title: 'Pengingat',
+                  note: '$_selectedRepeat  ',
                   myWidget: DropdownButton<String>(
                       borderRadius: BorderRadius.circular(10),
                       dropdownColor: Colors.blueGrey,
@@ -157,7 +157,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                               alignment: AlignmentDirectional.bottomStart,
                               value: e.toString(),
                               child: Text(
-                                '$e',
+                                e,
                                 style: TextStyle(color: Colors.white),
                               )))
                           .toList(),
@@ -174,7 +174,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   children: [
                     colorPalette(),
                     MyButton(
-                        label: 'Create Task',
+                        label: 'Buat Jadwal',
+                        color: const Color.fromARGB(255, 46, 232, 0),
+                        textStyle: titleStyle.copyWith(color: primaryClr),
                         onTap: () {
                           _validateData();
                         })
@@ -204,13 +206,13 @@ class _AddTaskPageState extends State<AddTaskPage> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CircleAvatar(
-                  child: _selectedColor == index ? Icon(Icons.done) : null,
                   backgroundColor: index == 0
                       ? primaryClr
                       : index == 1
                           ? pinkClr
                           : orangeClr,
                   radius: 14,
+                  child: _selectedColor == index ? Icon(Icons.done) : null,
                 ),
               ),
             );
@@ -240,7 +242,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
       _addTasksToDb();
       Get.back();
     } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
-      Get.snackbar('Required field', 'please fill all the required fields',
+      Get.snackbar('Wajib Isi', 'Tolong Isi Semua Field',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.white,
           colorText: pinkClr,
@@ -249,32 +251,61 @@ class _AddTaskPageState extends State<AddTaskPage> {
   }
 
   void _getDateFromUser() async {
-    DateTime? _pickedDate = await showDatePicker(
+    DateTime? pickedDate = await showDatePicker(
       context: context,
       firstDate: DateTime(2015),
-      lastDate: DateTime(2040),
+      lastDate: DateTime(2100),
     );
     setState(() {
-      if (_pickedDate != null) {
-        _selectedDate = _pickedDate;
+      if (pickedDate != null) {
+        _selectedDate = pickedDate;
       }
     });
   }
 
   void _getTimeFromUser({required bool isStartTime}) async {
-    TimeOfDay? _pickedTime = await showTimePicker(
+    TimeOfDay? pickedTime = await showTimePicker(
         context: context,
         initialTime: isStartTime
             ? TimeOfDay.fromDateTime(DateTime.now())
             : TimeOfDay.fromDateTime(
                 DateTime.now().add(const Duration(minutes: 15))));
-    String _formatedTime = _pickedTime!.format(context);
+    // ignore: use_build_context_synchronously
+    String formatedTime = pickedTime!.format(context);
     setState(() {
-      if (_pickedTime != null && isStartTime) {
-        _startTime = _formatedTime;
-      } else if (_pickedTime != null && !isStartTime) {
-        _endTime = _formatedTime;
+      if (isStartTime) {
+        _startTime = formatedTime;
+      } else if (!isStartTime) {
+        _endTime = formatedTime;
       }
     });
+  }
+}
+
+class MyButton extends StatelessWidget {
+  final String label;
+  final Color color;
+  final TextStyle textStyle;  // Now it expects TextStyle for the button text
+  final VoidCallback onTap;
+
+  MyButton({super.key, 
+    required this.label,
+    required this.color,
+    required this.textStyle,  // Changed to TextStyle
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onTap,
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(color),
+      ),
+      child: Text(
+        label,
+        style: textStyle,  // Apply textStyle here
+      ),
+    );
   }
 }

@@ -6,7 +6,7 @@ class MyButton extends StatelessWidget {
   const MyButton({
     Key? key,
     required this.label,
-    required this.onTap,
+    required this.onTap, required Color color, required Color style,
   }) : super(key: key);
   final String label;
   final Function() onTap;

@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:todo/db/db_helper.dart';
 import 'package:todo/models/task.dart';
-import 'package:todo/services/theme_services.dart';
 
 class TaskController extends GetxController {
   @override

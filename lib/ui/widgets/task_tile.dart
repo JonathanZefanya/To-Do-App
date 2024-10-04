@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo/models/task.dart';
 import 'package:todo/ui/size_config.dart';
 import 'package:todo/ui/theme.dart';
 
 class TaskTile extends StatelessWidget {
-  const TaskTile(this.task, {Key? key}) : super(key: key);
+  const TaskTile(this.task, {super.key});
   final Task task;
   @override
   Widget build(BuildContext context) {

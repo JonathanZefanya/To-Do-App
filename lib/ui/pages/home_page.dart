@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/controllers/task_controller.dart';
@@ -12,12 +11,8 @@ import 'package:todo/models/task.dart';
 import 'package:todo/services/notification_services.dart';
 import 'package:todo/services/theme_services.dart';
 import 'package:todo/ui/pages/add_task_page.dart';
-import 'package:todo/ui/pages/notification_screen.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:todo/ui/size_config.dart';
 import 'package:todo/ui/theme.dart';
-import 'package:todo/ui/widgets/button.dart';
-import 'package:todo/ui/widgets/input_field.dart';
 import 'package:todo/ui/widgets/task_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -41,7 +36,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    final themeServices = Get.find<ThemeServices>();
+    Get.find<ThemeServices>();
     final ThemeController themeController = Get.find();
     // final ThemeServices themeServices = Get.find();
     return Scaffold(
@@ -49,7 +44,7 @@ class _HomePageState extends State<HomePage> {
           elevation: 0,
           actions: [
             CircleAvatar(
-              backgroundImage: AssetImage('images/person.jpeg'),
+              backgroundImage: AssetImage('images/nahida.png'),
             ),
             SizedBox(
               width: 20,
@@ -94,13 +89,15 @@ class _HomePageState extends State<HomePage> {
                 style: subHeadingStyle,
               ),
               Text(
-                'Today',
+                'Hari Ini',
                 style: headingStyle,
               )
             ],
           ),
           MyButton(
-              label: "+ Add Task",
+              label: "+ Tambah",
+              color: const Color.fromARGB(255, 46, 232, 0),
+              textStyle: Theme.of(context).textTheme.bodyLarge!,
               onTap: () async {
                 await Get.to(() => const AddTaskPage());
               })
@@ -121,7 +118,7 @@ class _HomePageState extends State<HomePage> {
         width: 70,
         height: 100,
         selectedTextColor: Colors.white,
-        selectionColor: primaryClr,
+        selectionColor: const Color.fromARGB(255, 46, 232, 0),
         onDateChange: (date) {
           setState(() {
             _selectedDate = date;
@@ -241,7 +238,7 @@ class _HomePageState extends State<HomePage> {
                     ? SizedBox(height: 6)
                     : SizedBox(height: 220),
                 SvgPicture.asset(
-                  color: primaryClr.withOpacity(0.6),
+                  color: const Color.fromARGB(255, 46, 232, 0).withOpacity(0.6),
                   'images/task.svg',
                   height: 90,
                   semanticsLabel: 'Task',
@@ -252,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                   child: Text(
                     textAlign: TextAlign.center,
                     style: subTitleStyle,
-                    'You do not have any tasks yet!\n Add new tasks to make your days productive.',
+                    'Kamu masih belum mempunyai jadwal!\n Tambahkan jadwalmu disini.',
                   ),
                 ),
                 SizeConfig.orientation == Orientation.landscape
@@ -328,15 +325,15 @@ class _HomePageState extends State<HomePage> {
             task.isCompleted == 1
                 ? Container()
                 : _buildBottomSheet(
-                    label: 'Task Completed',
+                    label: 'Jadwal Selesai',
                     onTap: () {
                       TaskController().markAsCompleted(task.id!);
                       _taskController.getTask();
                       Get.back();
                     },
-                    clr: primaryClr),
+                    clr: const Color.fromARGB(255, 23, 194, 0)),
             _buildBottomSheet(
-                label: 'Delete Task',
+                label: 'Hapus Jadwal',
                 onTap: () {
                   TaskController().deleteTask(task: task);
                   _taskController.getTask();
@@ -351,7 +348,7 @@ class _HomePageState extends State<HomePage> {
                 onTap: () {
                   Get.back();
                 },
-                clr: primaryClr),
+                clr: const Color.fromARGB(255, 84, 180, 0)),
             SizedBox(
               height: 20,
             )
@@ -359,5 +356,33 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     ));
+  }
+}
+
+class MyButton extends StatelessWidget {
+  final String label;
+  final Color color;
+  final TextStyle textStyle;  // Now it expects TextStyle for the button text
+  final VoidCallback onTap;
+
+  MyButton({
+    required this.label,
+    required this.color,
+    required this.textStyle,  // Changed to TextStyle
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onTap,
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(color),
+      ),
+      child: Text(
+        label,
+        style: textStyle,  // Apply textStyle here
+      ),
+    );
   }
 }

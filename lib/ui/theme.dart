@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const Color bluishClr = Color(0xFF4e5ae8);
@@ -13,7 +12,7 @@ const Color darkHeaderClr = Color(0xFF424242);
 
 class Themes {
   static final light = ThemeData(
-    primaryColor: primaryClr,
+    primaryColor: const Color.fromARGB(255, 51, 236, 0),
     dialogBackgroundColor: Colors.white,
     scaffoldBackgroundColor: Colors.white,
     brightness: Brightness.light,

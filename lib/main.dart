@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:todo/controllers/themeController.dart';
 import 'package:todo/db/db_helper.dart';
 import 'package:todo/services/notification_services.dart';
 import 'package:todo/services/theme_services.dart';
-import 'package:todo/ui/pages/notification_screen.dart';
-import 'package:todo/ui/size_config.dart';
 import 'package:todo/ui/theme.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'ui/pages/home_page.dart';
@@ -35,7 +31,7 @@ class MyApp extends StatelessWidget {
         theme: Themes.light,
         darkTheme: Themes.dark,
         themeMode: ThemeServices().theme,
-        title: 'Flutter Demo',
+        title: 'Nahi-Do',
         debugShowCheckedModeBanner: false,
         home: HomePage());
   }

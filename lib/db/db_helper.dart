@@ -37,7 +37,7 @@ class DBHelper {
   }
 
   static Future<int> delete(Task task) async {
-    return await _db!.delete(_tableName, where: 'id=?', whereArgs: [task!.id]);
+    return await _db!.delete(_tableName, where: 'id=?', whereArgs: [task.id]);
   }
 
   static Future<int> update(int id) async {
